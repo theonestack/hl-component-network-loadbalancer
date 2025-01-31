@@ -1,0 +1,31 @@
+test_metadata:
+  type: config
+  name: alb_target
+  description: test specifying an ALB as a target
+
+loadbalancer_scheme: public
+
+loadbalancer_tags:
+  Name: alb-proxy
+
+records:
+  - albproxy
+
+targetgroups:
+  alb:
+    protocol: tcp
+    port: 443
+    type: alb
+    tags:
+      Name: ALB-TG
+    healthcheck:
+      HealthCheckPort: "traffic-port"
+      protocol: TCP
+    alb_arn:
+      Ref: ALBArn
+
+listeners:
+  alb:
+    port: 443
+    protocol: tcp
+    targetgroup: alb
